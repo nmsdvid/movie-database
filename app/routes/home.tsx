@@ -5,19 +5,14 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from "react-intersection-observer";
 import {
   Container,
-  TextField,
   Box,
-  InputAdornment,
-  Button,
   Grid
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import { Header } from "~/components/common/Header";
 import { Wrapper } from "~/components/common/Wrapper";
 import { MovieItem } from "~/components/MovieItem";
 import { LoadingBar } from "~/components/common/Loading";
-
-const NETFLIX_RED = '#E50914';
+import { SearchInput } from "~/components/SearchInput";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -56,65 +51,9 @@ export default function Home() {
     <Wrapper>
       <Header title="Movie Finder" />
       <Container maxWidth="lg">
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mb: 6
-          }}
-        >
-          <TextField
-            size="medium"
-            placeholder="Search movies..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{
-              width: '100%',
-              maxWidth: 600,
-              '& .MuiOutlinedInput-root': {
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
-                color: 'white',
-                '& fieldset': {
-                  borderColor: 'rgba(255, 255, 255, 0.3)',
-                },
-                '&:hover fieldset': {
-                  borderColor: NETFLIX_RED,
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: NETFLIX_RED,
-                },
-              },
-              '& .MuiOutlinedInput-input': {
-                color: 'white',
-                fontSize: '1.1rem',
-              }
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: NETFLIX_RED }} />
-                </InputAdornment>
-              ),
-              endAdornment: searchTerm && (
-                <InputAdornment position="end">
-                  <Button
-                    variant="contained"
-                    sx={{
-                      bgcolor: NETFLIX_RED,
-                      '&:hover': {
-                        bgcolor: '#B1060F',
-                      }
-                    }}
-                  >
-                    Search
-                  </Button>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
 
+        <SearchInput onSearchTerm={setSearchTerm} />
+        
         {isLoading ? (<LoadingBar />) : (<Grid container spacing={3}>
           {results.map((movie) => (
             <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={movie.imdbID}>
