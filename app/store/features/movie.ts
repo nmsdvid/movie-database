@@ -1,7 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { Movie } from '~/types/movie';
+
 
 interface MovieState {
-    favouriteMovies: string[]
+    favouriteMovies: Movie[]
 }
 
 const initialState: MovieState = {
@@ -12,13 +14,18 @@ export const movieSlice = createSlice({
     name: 'movie',
     initialState,
     reducers: {
-        favouriteMovie: (state, action: PayloadAction<string>) => {
-            const movieId = action.payload;
-            state.favouriteMovies.push(movieId)
+        toggleFavouriteMovies: (state, action: PayloadAction<Movie>) => {
+            const movie = action.payload;
+            const index = state.favouriteMovies.findIndex(m => m.imdbID === movie.imdbID);
+            if (index === -1) {
+                state.favouriteMovies.push(movie);
+            } else {
+                state.favouriteMovies.splice(index, 1);
+            }
         },
     },
 })
 
-export const { favouriteMovie } = movieSlice.actions
+export const { toggleFavouriteMovies } = movieSlice.actions
 
 export default movieSlice.reducer

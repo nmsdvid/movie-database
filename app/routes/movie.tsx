@@ -1,7 +1,7 @@
 import type { Route } from "./+types/movie";
 import {getMovie} from '../api/index'
 import { useDispatch } from "react-redux";
-import {favouriteMovie} from '~/store/features/movie'
+import {toggleFavouriteMovies} from '~/store/features/movie'
 
 export async function clientLoader({
   params,
@@ -13,16 +13,11 @@ export default function Movie({
   loaderData,
 }: Route.ComponentProps) {
   const dispach = useDispatch();
-  const { Title, imdbID } = loaderData.movie;
-
-  const handleAddToFavourite = (imdbID: string) => {
-    dispach(favouriteMovie(imdbID));
-  }
-
+  const { Title } = loaderData.movie;
   return (
     <div>
       <h1>{Title}</h1>
-      <button onClick={()=>handleAddToFavourite(imdbID)}>Add To Fav</button>
+      <button onClick={()=>dispach(toggleFavouriteMovies(loaderData.movie))}>Add To Fav</button>
     </div>
   );
 }
