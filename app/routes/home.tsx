@@ -1,9 +1,10 @@
 
 import type { Route } from "./+types/home";
-import { useEffect } from "react";
-import {searchMovies} from '~/api/'
+import { useEffect, useState } from "react";
+import { searchMovies } from '~/api/'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
     { name: "description", content: "Welcome to React Router!" },
@@ -12,9 +13,25 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
 
-  useEffect(()=>{
-    searchMovies('batman', 1);
-  },[]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  return <div className="w-full"></div>;
+  const {
+    data,
+  } = useInfiniteQuery({
+    queryKey: [searchTerm],
+    queryFn: searchMovies,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => lastPage.nextPage,
+  })
+
+  console.log(data);
+
+  return <div className="w-full">
+
+    <input type="text" onChange={(e) => setSearchTerm(e.target.value)} />
+
+    {data?.pages.map((page) => page.movies.map((movie) => <h1>{movie.Title}</h1>))}
+
+
+  </div>;
 }
