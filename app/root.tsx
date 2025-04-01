@@ -11,7 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store";
-import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from 'redux-persist/lib/integration/react.js';
 import { theme } from "./theme/theme";
 import { ThemeProvider } from "@mui/material";
 
