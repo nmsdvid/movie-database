@@ -1,4 +1,7 @@
+
 import type { Route } from "./+types/home";
+import { useEffect } from "react";
+import {searchMovies} from '~/api/'
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,5 +11,10 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <div className="w-full">Welcome</div>;
+
+  useEffect(()=>{
+    searchMovies('batman', 1);
+  },[]);
+
+  return <div className="w-full"></div>;
 }
