@@ -1,9 +1,7 @@
-
-
 import { configureStore } from '@reduxjs/toolkit'
 import { movieSlice } from './features/movie'
+import searchReducer from './features/search'
 import { combineReducers } from 'redux'
-
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { persistReducer, persistStore } from 'redux-persist'
 
@@ -22,13 +20,12 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-    movie: movieSlice.reducer
+    movie: persistReducer(persistConfig, movieSlice.reducer),
+    search: searchReducer
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-
 export const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
