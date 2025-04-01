@@ -1,8 +1,11 @@
 import type { Route } from "./+types/home";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { searchMovies } from '~/api/'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from "react-intersection-observer";
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchTerm } from '~/store/features/search';
+import type { RootState } from '~/store/store';
 import {
   Container,
   Box,
@@ -22,7 +25,8 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const dispatch = useDispatch();
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
 
   const { ref, inView } = useInView();
   const {
@@ -51,8 +55,10 @@ export default function Home() {
     <Wrapper>
       <Header title="Movie Finder" />
       <Container maxWidth="lg">
-
-        <SearchInput onSearchTerm={setSearchTerm} />
+        <SearchInput 
+          value={searchTerm}
+          onSearchTerm={(term) => dispatch(setSearchTerm(term))} 
+        />
         
         {isLoading ? (<LoadingBar />) : (<Grid container spacing={3}>
           {results.map((movie) => (

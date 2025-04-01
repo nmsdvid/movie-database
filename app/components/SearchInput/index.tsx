@@ -2,25 +2,19 @@ import {
     TextField,
     Box,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
 
-interface SearchIconProps {
-    onSearchTerm: (searchTerm: string) => any
+interface SearchInputProps {
+    value: string;
+    onSearchTerm: (searchTerm: string) => void;
 }
 
-export const SearchInput: React.FC<SearchIconProps> = ({ onSearchTerm }) => {
-    const [searchTerm, setSearchTerm] = useState<string>("");
-
-    useEffect(() => {
-        onSearchTerm(searchTerm);
-    }, [searchTerm]);
-
+export const SearchInput: React.FC<SearchInputProps> = ({ value, onSearchTerm }) => {
     return (
         <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>
             <TextField
                 placeholder="Search movies..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={value}
+                onChange={(e) => onSearchTerm(e.target.value)}
                 fullWidth
                 sx={{
                     maxWidth: 600,
