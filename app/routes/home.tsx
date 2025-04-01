@@ -3,6 +3,7 @@ import type { Route } from "./+types/home";
 import { useEffect, useState } from "react";
 import { searchMovies } from '~/api/'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { NavLink } from "react-router";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -30,7 +31,7 @@ export default function Home() {
 
     <input type="text" onChange={(e) => setSearchTerm(e.target.value)} />
 
-    {data?.pages.map((page) => page.movies.map((movie) => <h1>{movie.Title}</h1>))}
+    {data?.pages.map((page) => page.movies.map((movie) => <NavLink to={`movie/${movie.imdbID}`}>{movie.Title}</NavLink>))}
 
 
   </div>;
