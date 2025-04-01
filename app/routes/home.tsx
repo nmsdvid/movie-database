@@ -3,21 +3,19 @@ import { useEffect, useMemo, useState } from "react";
 import { searchMovies } from '~/api/'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from "react-intersection-observer";
-import { 
-  Container, 
-  TextField, 
+import {
+  Container,
+  TextField,
   Box,
   InputAdornment,
-  Button
+  Button,
+  Grid
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Header } from "~/components/common/Header";
 import { Wrapper } from "~/components/common/Wrapper";
-import { Grid } from "~/components/common/Grid";
 import { MovieItem } from "~/components/MovieItem";
 import { LoadingBar } from "~/components/common/Loading";
-import { useSelector } from "react-redux";
-import type { RootState } from "~/store/store";
 
 const NETFLIX_RED = '#E50914';
 
@@ -50,17 +48,17 @@ export default function Home() {
     }
   }, [inView, hasNextPage]);
 
-  const results = useMemo(()=>{
+  const results = useMemo(() => {
     return data?.pages?.flatMap((page) => page.movies) ?? [];
-  },[data]);
+  }, [data]);
 
   return (
     <Wrapper>
       <Header title="Movie Finder" />
       <Container maxWidth="lg">
-        <Box 
-          sx={{ 
-            display: 'flex', 
+        <Box
+          sx={{
+            display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             mb: 6
@@ -71,7 +69,7 @@ export default function Home() {
             placeholder="Search movies..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ 
+            sx={{
               width: '100%',
               maxWidth: 600,
               '& .MuiOutlinedInput-root': {
@@ -100,9 +98,9 @@ export default function Home() {
               ),
               endAdornment: searchTerm && (
                 <InputAdornment position="end">
-                  <Button 
-                    variant="contained" 
-                    sx={{ 
+                  <Button
+                    variant="contained"
+                    sx={{
                       bgcolor: NETFLIX_RED,
                       '&:hover': {
                         bgcolor: '#B1060F',
@@ -117,17 +115,16 @@ export default function Home() {
           />
         </Box>
 
-        {isLoading ? (<LoadingBar />) : (
-          <Grid>
-          {results.map((movie) => <MovieItem movie={movie} showFavoriteIcon={false} />)}
-          </Grid>
-        )}
-
-
+        {isLoading ? (<LoadingBar />) : (<Grid container spacing={3}>
+          {results.map((movie) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={movie.imdbID}>
+              <MovieItem movie={movie} showFavoriteIcon={false} />
+            </Grid>
+          ))}
+        </Grid>)}
 
         <Box ref={ref} sx={{ height: 100 }} />
       </Container>
-    
     </Wrapper>
   );
 }

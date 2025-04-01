@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import type { RootState } from '~/store/store';
 import {
     Container,
+    Grid,
 } from '@mui/material';
 import { Wrapper } from "~/components/common/Wrapper";
 import { Header } from "~/components/common/Header";
 import { NoFavorite } from "~/components/NoFavorite";
-import { Grid } from "~/components/common/Grid";
 import { MovieItem } from "~/components/MovieItem";
 
 export default function Favourites() {
@@ -16,8 +16,10 @@ export default function Favourites() {
             <Header title="My Favourites" />
             <Container maxWidth="lg">
                 {favouriteMovies.length === 0 ? (<NoFavorite title="No favorite movies yet" description="Add movies to your favorites by clicking the icon" />) : (
-                    <Grid>
-                        {favouriteMovies.map((movie) => <MovieItem movie={movie} showFavoriteIcon={true} />)}
+                    <Grid container spacing={3}>
+                        {favouriteMovies.map((movie) => <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={movie.imdbID}>
+                            <MovieItem movie={movie} showFavoriteIcon={true} />
+                        </Grid>)}
                     </Grid>
                 )}
             </Container>
