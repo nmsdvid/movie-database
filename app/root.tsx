@@ -10,8 +10,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Provider } from "react-redux";
-import {store, persistor} from "./store/store";
+import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { theme } from "./theme/theme";
+import { ThemeProvider } from "@mui/material";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -38,14 +40,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-      <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-        </PersistGate>
-        </Provider>
-        
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

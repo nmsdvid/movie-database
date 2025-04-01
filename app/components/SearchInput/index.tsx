@@ -4,8 +4,6 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-const NETFLIX_RED = '#E50914';
-
 interface SearchIconProps {
     onSearchTerm: (searchTerm: string) => any
 }
@@ -27,21 +25,18 @@ export const SearchInput: React.FC<SearchIconProps> = ({ onSearchTerm }) => {
                 sx={{
                     maxWidth: 600,
                     '& .MuiOutlinedInput-root': {
-                        bgcolor: 'rgba(255, 255, 255, 0.1)',
-                        color: 'white',
+                        bgcolor: 'background.paper',
+                        color: 'text.primary',
                         '& fieldset': {
                             borderColor: 'rgba(255, 255, 255, 0.3)',
                         },
                         '&:hover fieldset': {
-                            borderColor: NETFLIX_RED,
+                            borderColor: 'primary.main',
                         },
                         '&.Mui-focused fieldset': {
-                            borderColor: NETFLIX_RED,
+                            borderColor: 'primary.main',
                         },
                     },
-                    '& .MuiOutlinedInput-input': {
-                        color: 'white',
-                    }
                 }}
             />
         </Box>

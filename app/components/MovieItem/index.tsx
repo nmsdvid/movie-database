@@ -6,7 +6,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "~/store/store";
 import { toggleFavouriteMovies } from '~/store/features/movie';
-const NETFLIX_RED = '#E50914';
 
 interface MovieItemProp {
     movie: Movie,
@@ -33,7 +32,7 @@ export const MovieItem = ({ movie, showFavoriteIcon = false }: MovieItemProp) =>
                     transition: 'transform 0.2s',
                     '&:hover': {
                         transform: 'scale(1.02)',
-                        boxShadow: `0 0 20px ${NETFLIX_RED}40`,
+                        boxShadow: `0 0 20px primary.main 40`,
                     }
                 }}
             >
@@ -58,11 +57,11 @@ export const MovieItem = ({ movie, showFavoriteIcon = false }: MovieItemProp) =>
                                 position: 'absolute',
                                 top: 8,
                                 right: 8,
-                                color: isFavourite ? NETFLIX_RED : 'rgba(255, 255, 255, 0.7)',
+                                color: isFavourite ? 'primary.main' : 'rgba(255, 255, 255, 0.7)',
                                 bgcolor: 'rgba(0, 0, 0, 0.5)',
                                 '&:hover': {
                                     bgcolor: 'rgba(0, 0, 0, 0.7)',
-                                    color: NETFLIX_RED
+                                    color: 'primary.main'
                                 }
                             }}
                         >

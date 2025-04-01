@@ -19,8 +19,6 @@ import type { RootState } from '~/store/store';
 import { Wrapper } from "~/components/common/Wrapper";
 import { Header } from "~/components/common/Header";
 
-const NETFLIX_RED = '#E50914';
-
 export async function clientLoader({
   params,
 }: Route.ClientLoaderArgs) {
@@ -82,9 +80,9 @@ export default function Movie({
                 <IconButton 
                   onClick={() => dispatch(toggleFavouriteMovies(loaderData.movie))}
                   sx={{ 
-                    color: isFavourite ? NETFLIX_RED : 'white',
+                    color: isFavourite ? 'primary.main' : 'white',
                     '&:hover': {
-                      color: NETFLIX_RED
+                      color: 'primary.main'
                     }
                   }}
                 >

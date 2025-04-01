@@ -7,7 +7,6 @@ import {
 interface HeaderProps {
     title: string;
 }
-const NETFLIX_RED = '#E50914';
 
 export const Header: React.FC<HeaderProps> = ({ title }) => {
     return <AppBar
@@ -24,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                 component="div"
                 sx={{
                     flexGrow: 1,
-                    color: NETFLIX_RED,
+                    color: 'primary.main',
                     fontWeight: 'bold'
                 }}
             >
