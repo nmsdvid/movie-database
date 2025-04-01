@@ -1,9 +1,5 @@
 import axios from "axios";
-
-interface Movie {
-    Title: string
-    imdbID: string
-}
+import type { Movie } from "~/types/movie";
 
 interface SearchMoviesParams {
     queryKey: string[];
