@@ -17,7 +17,7 @@ export default function Favourites() {
             <Container maxWidth="lg">
                 {favouriteMovies.length === 0 ? (<NoFavorite title="No favorite movies yet" description="Add movies to your favorites by clicking the icon" />) : (
                     <Grid>
-                        {favouriteMovies.map((movie) => <MovieItem movie={movie} />)}
+                        {favouriteMovies.map((movie) => <MovieItem movie={movie} showFavoriteIcon={true} />)}
                     </Grid>
                 )}
             </Container>

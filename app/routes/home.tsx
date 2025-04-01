@@ -16,6 +16,8 @@ import { Wrapper } from "~/components/common/Wrapper";
 import { Grid } from "~/components/common/Grid";
 import { MovieItem } from "~/components/MovieItem";
 import { LoadingBar } from "~/components/common/Loading";
+import { useSelector } from "react-redux";
+import type { RootState } from "~/store/store";
 
 const NETFLIX_RED = '#E50914';
 
@@ -28,6 +30,7 @@ export function meta({ }: Route.MetaArgs) {
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
+
   const { ref, inView } = useInView();
   const {
     data,
@@ -116,12 +119,15 @@ export default function Home() {
 
         {isLoading ? (<LoadingBar />) : (
           <Grid>
-            {results.map((movie) => <MovieItem key={movie.imdbID} movie={movie} />)}
+          {results.map((movie) => <MovieItem movie={movie} showFavoriteIcon={false} />)}
           </Grid>
         )}
 
+
+
         <Box ref={ref} sx={{ height: 100 }} />
       </Container>
+    
     </Wrapper>
   );
 }

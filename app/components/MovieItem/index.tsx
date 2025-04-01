@@ -2,17 +2,22 @@ import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { NavLink } from "react-router";
 import type { Movie } from "~/types/movie";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "~/store/store";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "~/store/store";
 import { toggleFavouriteMovies } from '~/store/features/movie';
 const NETFLIX_RED = '#E50914';
 
 interface MovieItemProp {
-    movie: Movie
+    movie: Movie,
+    showFavoriteIcon?: boolean
 }
 
-export const MovieItem = ({ movie }: MovieItemProp) => {
+export const MovieItem = ({ movie, showFavoriteIcon = false }: MovieItemProp) => {
     const dispatch = useDispatch<AppDispatch>();
+    const favouriteMovies = useSelector((state: RootState) => state.movie.favouriteMovies);
+    const isFavourite = favouriteMovies.some(m => m.imdbID === movie.imdbID);
+
     return (
         <NavLink
             key={movie.imdbID}
@@ -35,7 +40,7 @@ export const MovieItem = ({ movie }: MovieItemProp) => {
                 <Box sx={{ position: 'relative', aspectRatio: '2/3' }}>
                     <Box
                         component="img"
-                        src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=No+Image'}
+                        src={movie.Poster !== 'N/A' ? movie.Poster : 'https://placehold.co/300x450?text=No+Image'}
                         alt={movie.Title}
                         sx={{
                             width: '100%',
@@ -43,21 +48,27 @@ export const MovieItem = ({ movie }: MovieItemProp) => {
                             objectFit: 'cover'
                         }}
                     />
-                    <IconButton
-                        onClick={(e) => dispatch(toggleFavouriteMovies(movie))}
-                        sx={{
-                            position: 'absolute',
-                            top: 8,
-                            right: 8,
-                            color: NETFLIX_RED,
-                            bgcolor: 'rgba(0, 0, 0, 0.5)',
-                            '&:hover': {
-                                bgcolor: 'rgba(0, 0, 0, 0.7)'
-                            }
-                        }}
-                    >
-                        <FavoriteIcon />
-                    </IconButton>
+                    {showFavoriteIcon && (
+                        <IconButton
+                            onClick={(e) => {
+                                e.preventDefault();
+                                dispatch(toggleFavouriteMovies(movie));
+                            }}
+                            sx={{
+                                position: 'absolute',
+                                top: 8,
+                                right: 8,
+                                color: isFavourite ? NETFLIX_RED : 'rgba(255, 255, 255, 0.7)',
+                                bgcolor: 'rgba(0, 0, 0, 0.5)',
+                                '&:hover': {
+                                    bgcolor: 'rgba(0, 0, 0, 0.7)',
+                                    color: NETFLIX_RED
+                                }
+                            }}
+                        >
+                            {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                        </IconButton>
+                    )}
                 </Box>
                 <Box sx={{ p: 2 }}>
                     <Typography
