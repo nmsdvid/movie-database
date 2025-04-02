@@ -2,7 +2,10 @@ import {
     Typography,
     AppBar,
     Toolbar,
+    Button,
 } from '@mui/material';
+import { Link } from 'react-router';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 interface HeaderProps {
     title: string;
@@ -29,6 +32,19 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
             >
                 {title}
             </Typography>
+            <Button
+                component={Link}
+                to="/favourites"
+                startIcon={<FavoriteIcon />}
+                sx={{
+                    color: 'primary.main',
+                    '&:hover': {
+                        backgroundColor: 'rgba(25, 118, 210, 0.04)',
+                    },
+                }}
+            >
+                Favourites
+            </Button>
         </Toolbar>
     </AppBar>
 }
