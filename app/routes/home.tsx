@@ -39,6 +39,7 @@ export default function Home() {
     queryFn: searchMovies,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => lastPage.nextPage,
+    enabled: !!searchTerm
   })
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function Home() {
           ))}
         </Grid>)}
 
-        <Box ref={ref} sx={{ height: 100 }} />
+        <Box ref={ref} sx={{ height: 200 }} />
       </Container>
     </Wrapper>
   );
