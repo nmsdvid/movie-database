@@ -40,6 +40,10 @@ npm run dev
 
 The application will be available at `http://localhost:5173`.
 
+## Live Preview
+
+You can view the live version of the application at [movie-database-olive-kappa.vercel.app](https://movie-database-olive-kappa.vercel.app)
+
 ## Available Scripts
 
 - `npm run dev` - Start development server
